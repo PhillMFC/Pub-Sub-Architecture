@@ -29,6 +29,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/api")
 public class APIGateway{
 
+    @Value("${server.address}")
+    private String serverAddress;
+    
     @Autowired
     private TopicService TopicContainer;
 
@@ -42,10 +45,10 @@ public class APIGateway{
         String subscriberURL;
 
         switch (messageTopic.getTopic()) {
-            case "sum" -> subscriberURL = "http://192.168.100.19:50001/sum-subscriber";
-            case "sub" -> subscriberURL = "http://192.168.100.19:50002/sub-subscriber";
-            case "mul" -> subscriberURL = "http://192.168.100.19:50003/mul-subscriber";
-            case "div" -> subscriberURL = "http://192.168.100.19:50004/div-subscriber";
+            case "sum" -> subscriberURL = "http://" + serverAddress + ":50001/sum-subscriber";
+            case "sub" -> subscriberURL = "http://" + serverAddress + ":50002/sub-subscriber";
+            case "mul" -> subscriberURL = "http://" + serverAddress + ":50003/mul-subscriber";
+            case "div" -> subscriberURL = "http://" + serverAddress + ":50004/div-subscriber";
             default -> throw new AssertionError("\nTópico desconhecido\n");
         }
 
